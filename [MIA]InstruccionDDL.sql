@@ -1,0 +1,103 @@
+CREATE DATABASE GRANDEPICVIRUS;
+
+USE GRANEPICVIRUS;
+
+CREATE TABLE IF NOT EXISTS VICTIMA
+(
+	ID_VICTIMA int not null primary key auto_increment,
+    NOMBRE varchar(50) not null,
+    APELLIDO varchar(50) not null,
+    DIRECCION varchar(80) not null
+); 
+
+CREATE TABLE IF NOT EXISTS HOSPITAL
+(
+	ID_HOSPITAL int not null primary key auto_increment,
+    NOMBRE varchar(50) not null,
+    DIRECCION varchar(80) not null
+);
+
+CREATE TABLE IF NOT EXISTS STATUSENFERMEDAD
+(
+	ID_STATUS int not null primary key auto_increment,
+    ESTADO varchar(30) not null
+);
+
+CREATE TABLE IF NOT EXISTS TIPOCONTACTO 
+(
+	ID_TIPOCONTACTO int not null primary key auto_increment,
+	CONTACTO varchar(30) not null
+);
+
+CREATE TABLE IF NOT EXISTS ASOCIADO
+(
+	ID_ASOCIADO int not null primary key auto_increment,
+    NOMBRE varchar(50) not null,
+    APELLIDO varchar(50) not null,
+    FECHACONOCIMIENTO datetime not null
+);
+
+CREATE TABLE IF NOT EXISTS LUGAR
+(
+	ID_LUGAR int not null primary key auto_increment,
+    UBICACION varchar(80) not null
+);
+
+CREATE TABLE IF NOT EXISTS TRATAMIENTO
+(
+	ID_TRATAMIENTO int not null primary key auto_increment,
+    NOMBRE varchar(50) not null,
+    EFECTIVIDAD int not null
+);
+
+CREATE TABLE IF NOT EXISTS CONTROL_LUGAR
+(
+	ID_LUGAR int not null,
+    ID_VICTIMA int not null,
+    PRIMARY KEY(ID_LUGAR, ID_VICTIMA),
+    FOREIGN KEY (ID_LUGAR) REFERENCES LUGAR(ID_LUGAR),
+    FOREIGN KEY (ID_VICTIMA) REFERENCES VICTIMA(ID_VICTIMA),
+    FECHAHORALLEGADA datetime not null,
+    FECHAHORASALIDA datetime not null
+);
+
+CREATE TABLE IF NOT EXISTS CONTROLTRATAMIENTO
+(
+	ID_VICTIMA int not null,
+    ID_TRATAMIENTO int not null,
+    PRIMARY KEY(ID_TRATAMIENTO, ID_VICTIMA),
+	FOREIGN KEY (ID_VICTIMA) REFERENCES VICTIMA(ID_VICTIMA),
+	FOREIGN KEY (ID_TRATAMIENTO) REFERENCES TRATAMIENTO(ID_TRATAMIENTO),
+	EFECTIVIDADVICTIMA int not null,
+    FECHAFIN datetime not null,
+    FECHAINICIO datetime not null
+    
+);
+
+CREATE TABLE IF NOT EXISTS REGISTRO_VICTIMA
+(
+	ID_VICTIMA int not null,
+    ID_HOSPITAL int not null,
+    ID_STATUS int not null,
+	PRIMARY KEY(ID_HOSPITAL, ID_VICTIMA),
+	FOREIGN KEY (ID_VICTIMA) REFERENCES VICTIMA(ID_VICTIMA),
+	FOREIGN KEY (ID_HOSPITAL) REFERENCES HOSPITAL(ID_HOSPITAL),
+	FOREIGN KEY (ID_STATUS) REFERENCES STATUSENFERMEDAD(ID_STATUS),
+    FECHASOSPECHOSA datetime not null,
+    FECHACONFIRMACION datetime not null,
+    FECHAMUERTE datetime
+);
+
+CREATE TABLE IF NOT EXISTS VICTIMA_ASOCIADO
+(
+	ID_ASOCIADO int not null,
+    ID_VICTIMA int not null,
+    ID_TIPOCONTACTO int,
+    PRIMARY KEY(ID_ASOCIADO, ID_VICTIMA),
+    FOREIGN KEY (ID_VICTIMA) REFERENCES VICTIMA(ID_VICTIMA),
+	FOREIGN KEY (ID_ASOCIADO) REFERENCES ASOCIADO(ID_ASOCIADO),
+	FOREIGN KEY (ID_TIPOCONTACTO) REFERENCES TIPOCONTACTO(ID_TIPOCONTACTO),
+    FECHAINICIO datetime,
+    FECHAFIN datetime
+	
+);

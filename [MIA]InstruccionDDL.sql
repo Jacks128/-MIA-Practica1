@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS VICTIMA
 CREATE TABLE IF NOT EXISTS HOSPITAL
 (
 	ID_HOSPITAL int not null primary key auto_increment,
-    NOMBRE varchar(50) not null,
+    NOMBRE varchar(50) not null unique,
     DIRECCION varchar(80) not null
 );
 
@@ -73,6 +73,9 @@ CREATE TABLE IF NOT EXISTS CONTROLTRATAMIENTO
     FECHAINICIO datetime not null
     
 );
+
+DROP TABLE HOSPITAL;
+DROP TABLE REGISTRO_VICTIMA;
 
 CREATE TABLE IF NOT EXISTS REGISTRO_VICTIMA
 (

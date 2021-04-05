@@ -18,6 +18,10 @@ class ApiRoutes{
         this.router.get('/consulta8',apiController.getConsulta8);
         this.router.get('/consulta9',apiController.getConsulta9);
         this.router.get('/consulta10',apiController.getConsulta10);
+        this.router.get('/eliminarTemporal',apiController.geteliminarTemporal);
+        this.router.get('/eliminarModelo',apiController.geteliminarModelo);
+        this.router.get('/cargarTemporal',apiController.getcargarTemporal);
+        this.router.get('/cargarModelo',apiController.getcargarModelo);
         
     }
 }
